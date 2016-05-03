@@ -14,8 +14,8 @@ public class UiStarter {
 
 			@Override
 			public void run() {
-				while (rotation<360) {
-					rotation = 2*rotation;
+				while (true) {
+					rotation = 2 * rotation;
 					System.out.println(rotation);
 					view.setRotation(rotation);
 					try {

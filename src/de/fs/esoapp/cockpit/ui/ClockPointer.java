@@ -51,7 +51,9 @@ public class ClockPointer extends JPanel implements Animated {
 	}
 
 	public void setRotation(double rotation) {
-		Double currentRotation = targetRotation;
+		Double currentRotation = rotations.poll() == null ? targetRotation
+				: rotations.poll();
+		rotations.clear();
 		targetRotation = rotation;
 		for (int i = 0; i < frequency; i++) {
 			rotations.add(((targetRotation - currentRotation) / frequency) * i
