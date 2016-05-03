@@ -8,7 +8,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import de.fs.esoapp.cockpit.ui.animation.AnimationLoop;
-import de.fs.esoapp.cockpit.ui.animation.ClockPointerAnimation;
 
 public class VirtualCockpitView extends JFrame implements CarModelListener {
 
@@ -16,6 +15,10 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 
 	private VirtualCockpitController controller;
 	private CarModel model;
+
+	private ClockPointer clockPointerSpeed;
+
+	private ClockPointer clockPointerTorque;
 
 	public VirtualCockpitView(VirtualCockpitController controller,
 			CarModel model) {
@@ -28,26 +31,12 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 
 		BackgroundPanel bgPanel = new BackgroundPanel();
 
-		ClockPointer clockPointerSpeed = new ClockPointer(
-				new ClockPointerAnimation() {
-					int i = 0;
+		AnimationLoop animationLoop = new AnimationLoop();
 
-					@Override
-					public double getRotation() {
-						return i++;
-					}
-				}, 70, 98);
+		clockPointerSpeed = new ClockPointer(animationLoop, 70, 98);
 		bgPanel.add(clockPointerSpeed);
 
-		ClockPointer clockPointerTorque = new ClockPointer(
-				new ClockPointerAnimation() {
-					int i = 0;
-
-					@Override
-					public double getRotation() {
-						return i++;
-					}
-				}, 480, 98);
+		clockPointerTorque = new ClockPointer(animationLoop, 480, 98);
 		bgPanel.add(clockPointerTorque);
 
 		this.getContentPane().add(bgPanel);
@@ -58,7 +47,6 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		AnimationLoop animationLoop = new AnimationLoop();
 		animationLoop.add(clockPointerSpeed);
 		animationLoop.add(clockPointerTorque);
 		animationLoop.start();
@@ -78,5 +66,10 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 		}
 
 		SwingUtilities.updateComponentTreeUI(this);
+	}
+
+	public void setRotation(int rotation) {
+		clockPointerSpeed.setRotation(rotation);
+		clockPointerTorque.setRotation(rotation);
 	}
 }

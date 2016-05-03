@@ -5,20 +5,25 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
 import de.fs.esoapp.cockpit.ui.animation.Animated;
-import de.fs.esoapp.cockpit.ui.animation.ClockPointerAnimation;
 
-public class ClockPointer extends Animated<ClockPointerAnimation> {
+public class ClockPointer extends JPanel implements Animated {
 
 	private static final long serialVersionUID = 1L;
 	private BufferedImage image;
-	private double rotationRequired;
+	private int frequency;
+	private double targetRotation = 0;
+	private Queue<Double> rotations = new LinkedList<>();
 
-	public ClockPointer(ClockPointerAnimation animation, int x, int y) {
-		super(animation);
+	public ClockPointer(AnimationHandler animationHander, int x, int y) {
+		super(null);
+		frequency = animationHander.getFrequency();
 		try {
 			image = ImageIO.read(BackgroundPanel.class
 					.getResourceAsStream("Pointer.png"));
@@ -38,12 +43,24 @@ public class ClockPointer extends Animated<ClockPointerAnimation> {
 
 		AffineTransform tx = new AffineTransform();
 		tx.translate(locationX, locationY);
-		tx.rotate(rotationRequired, image.getWidth() / 2, image.getWidth() / 2);
+		double rotation = Math
+				.toRadians(rotations.poll() == null ? targetRotation
+						: rotations.poll());
+		tx.rotate(rotation, image.getWidth() / 2, image.getWidth() / 2);
 		g2d.drawImage(image, tx, null);
 	}
 
+	public void setRotation(double rotation) {
+		Double currentRotation = targetRotation;
+		targetRotation = rotation;
+		for (int i = 0; i < frequency; i++) {
+			rotations.add(((targetRotation - currentRotation) / frequency) * i
+					+ currentRotation);
+		}
+	}
+
 	@Override
-	protected void animate(ClockPointerAnimation animation) {
-		rotationRequired = Math.toRadians(animation.getRotation());
+	public void animate() {
+		this.repaint();
 	}
 }

@@ -8,6 +8,25 @@ public class UiStarter {
 				model);
 		VirtualCockpitView view = new VirtualCockpitView(controller, model);
 		model.addCarModelListener(view);
+
+		new Thread(new Runnable() {
+			int rotation = 2;
+
+			@Override
+			public void run() {
+				while (rotation<360) {
+					rotation = 2*rotation;
+					System.out.println(rotation);
+					view.setRotation(rotation);
+					try {
+						Thread.sleep(400);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
 	}
 
 }
