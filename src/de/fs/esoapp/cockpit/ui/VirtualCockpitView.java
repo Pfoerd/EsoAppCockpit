@@ -11,13 +11,28 @@ import de.fs.esoapp.cockpit.ui.animation.AnimationLoop;
 
 public class VirtualCockpitView extends JFrame implements CarModelListener {
 
+	private class RotationProvider implements ClockPointerRotationProvider {
+
+		private double rotation;
+
+		@Override
+		public double getRotation() {
+			return rotation;
+		}
+
+		synchronized public void setRotation(double rotation) {
+			this.rotation = rotation;
+		}
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	private VirtualCockpitController controller;
 	private CarModel model;
 
+	private RotationProvider speedRotationProvider;
+	private RotationProvider torqueRotationProvider;
 	private ClockPointer clockPointerSpeed;
-
 	private ClockPointer clockPointerTorque;
 
 	public VirtualCockpitView(VirtualCockpitController controller,
@@ -33,10 +48,14 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 
 		AnimationLoop animationLoop = new AnimationLoop();
 
-		clockPointerSpeed = new ClockPointer(animationLoop, 11, 14);
+		speedRotationProvider = new RotationProvider();
+		clockPointerSpeed = new ClockPointer(speedRotationProvider,
+				animationLoop, 11, 14);
 		bgPanel.add(clockPointerSpeed);
 
-		clockPointerTorque = new ClockPointer(animationLoop, 660, 14);
+		torqueRotationProvider = new RotationProvider();
+		clockPointerTorque = new ClockPointer(torqueRotationProvider,
+				animationLoop, 660, 14);
 		bgPanel.add(clockPointerTorque);
 
 		this.getContentPane().add(bgPanel);
@@ -68,7 +87,7 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 	}
 
 	public void setRotation(double rotation) {
-		clockPointerSpeed.setRotation(rotation);
-		clockPointerTorque.setRotation(rotation);
+		speedRotationProvider.setRotation(rotation);
+		torqueRotationProvider.setRotation(rotation);
 	}
 }

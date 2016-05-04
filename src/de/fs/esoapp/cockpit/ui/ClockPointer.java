@@ -1,8 +1,8 @@
 package de.fs.esoapp.cockpit.ui;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -21,9 +21,12 @@ public class ClockPointer extends JPanel implements Animated {
 	private int frequency;
 	private double targetRotation = 0;
 	private Queue<Double> rotations = new LinkedList<>();
+	private ClockPointerRotationProvider dataProvider;
 
-	public ClockPointer(AnimationHandler animationHander, int x, int y) {
+	public ClockPointer(ClockPointerRotationProvider dataProvider,
+			AnimationHandler animationHander, int x, int y) {
 		super(null);
+		this.dataProvider = dataProvider;
 		frequency = animationHander.getFrequency();
 		try {
 			image = ImageIO.read(BackgroundPanel.class
@@ -45,21 +48,28 @@ public class ClockPointer extends JPanel implements Animated {
 
 		AffineTransform tx = new AffineTransform();
 		tx.translate(locationX, locationY + 104);
+		updateRotation();
 		double rotation = Math
 				.toRadians(rotations.poll() == null ? targetRotation
 						: rotations.poll());
 		tx.rotate(rotation, image.getWidth() / 2, image.getWidth() / 2 - 104);
+		RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_DEFAULT);
+		g2d.setRenderingHints(rh);
 		g2d.drawImage(image, tx, null);
 	}
 
-	public void setRotation(double rotation) {
-		Double currentRotation = rotations.poll() == null ? targetRotation
-				: rotations.poll();
-		rotations.clear();
-		targetRotation = rotation;
-		for (int i = 0; i < frequency; i++) {
-			rotations.add(((targetRotation - currentRotation) / frequency) * i
-					+ currentRotation);
+	private void updateRotation() {
+		double rotation = dataProvider.getRotation();
+		if (rotation != targetRotation) {
+			Double currentRotation = rotations.poll() == null ? targetRotation
+					: rotations.poll();
+			rotations.clear();
+			targetRotation = rotation;
+			for (int i = 0; i < frequency; i++) {
+				rotations.add(((targetRotation - currentRotation) / frequency)
+						* i + currentRotation);
+			}
 		}
 	}
 
