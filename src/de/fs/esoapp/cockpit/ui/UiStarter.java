@@ -20,7 +20,7 @@ public class UiStarter {
 					rotation = 1.5 * rotation;
 					// rotation = rotation + 10;
 					System.out.println(rotation);
-					view.setRotation(rotation);
+					view.onSpeedChanged(rotation);
 					try {
 						Thread.sleep(400);
 					} catch (InterruptedException e) {

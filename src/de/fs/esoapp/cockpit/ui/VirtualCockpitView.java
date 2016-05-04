@@ -86,8 +86,8 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 		SwingUtilities.updateComponentTreeUI(this);
 	}
 
-	public void setRotation(double rotation) {
-		speedRotationProvider.setRotation(rotation);
-		torqueRotationProvider.setRotation(rotation);
+	@Override
+	public void onSpeedChanged(double speed) {
+		speedRotationProvider.setRotation(speed);
 	}
 }
