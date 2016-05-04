@@ -10,12 +10,14 @@ public class UiStarter {
 		model.addCarModelListener(view);
 
 		new Thread(new Runnable() {
-			int rotation = 2;
+			// double rotation = 2;
+			double rotation = 0;
 
 			@Override
 			public void run() {
 				while (true) {
-					rotation = 2 * rotation;
+					// rotation = 1.5 * rotation;
+					rotation = rotation + 10;
 					System.out.println(rotation);
 					view.setRotation(rotation);
 					try {
@@ -28,5 +30,4 @@ public class UiStarter {
 			}
 		}).start();
 	}
-
 }

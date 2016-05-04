@@ -1,5 +1,6 @@
 package de.fs.esoapp.cockpit.ui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -30,7 +31,8 @@ public class ClockPointer extends JPanel implements Animated {
 		} catch (IOException e) {
 			assert (true);
 		}
-		this.setBounds(x, y, 255, 255);
+		this.setBounds(x, y, 335, 335);
+		// this.setBackground(Color.RED);
 		this.setOpaque(false);
 	}
 
@@ -42,11 +44,11 @@ public class ClockPointer extends JPanel implements Animated {
 		double locationY = getSize().height / 2;
 
 		AffineTransform tx = new AffineTransform();
-		tx.translate(locationX, locationY);
+		tx.translate(locationX, locationY + 104);
 		double rotation = Math
 				.toRadians(rotations.poll() == null ? targetRotation
 						: rotations.poll());
-		tx.rotate(rotation, image.getWidth() / 2, image.getWidth() / 2);
+		tx.rotate(rotation, image.getWidth() / 2, image.getWidth() / 2 - 104);
 		g2d.drawImage(image, tx, null);
 	}
 

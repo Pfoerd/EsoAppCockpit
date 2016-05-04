@@ -33,17 +33,16 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 
 		AnimationLoop animationLoop = new AnimationLoop();
 
-		clockPointerSpeed = new ClockPointer(animationLoop, 70, 98);
+		clockPointerSpeed = new ClockPointer(animationLoop, 11, 14);
 		bgPanel.add(clockPointerSpeed);
 
-		clockPointerTorque = new ClockPointer(animationLoop, 480, 98);
+		clockPointerTorque = new ClockPointer(animationLoop, 660, 14);
 		bgPanel.add(clockPointerTorque);
 
 		this.getContentPane().add(bgPanel);
 		this.pack();
-		this.setSize(new Dimension(819, 460));
+		this.setSize(new Dimension(1005, 420));
 		this.setLocation(100, 100);
-		this.setPreferredSize(new Dimension(819, 460));
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -68,7 +67,7 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 		SwingUtilities.updateComponentTreeUI(this);
 	}
 
-	public void setRotation(int rotation) {
+	public void setRotation(double rotation) {
 		clockPointerSpeed.setRotation(rotation);
 		clockPointerTorque.setRotation(rotation);
 	}
