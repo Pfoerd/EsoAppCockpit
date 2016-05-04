@@ -41,11 +41,11 @@ public class GearShift {
 
 	public double getEngineSpeed(double acceleration) {
 		return (getMaxEngineSpeed() / maxGears / maxAcceleration) / currentGear
-				* acceleration * 10;
+				* acceleration * 2;
 	}
 
 	public double transmit(double engineSpeed) {
-		return maxKmh / maxGears / maxGears * currentGear * currentGear
-				* engineSpeed / getMaxEngineSpeed() * 2;
+		return maxKmh / maxGears * currentGear * (maxGears - currentGear)
+				* engineSpeed / getMaxEngineSpeed();
 	}
 }
