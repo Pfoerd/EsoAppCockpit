@@ -1,10 +1,10 @@
 package de.fs.esoapp.cockpit.car.signals;
 
-public class EngineStartData {
+public class UpshiftButtonData {
 
 	private boolean pressed;
 
-	public EngineStartData(boolean pressed) {
+	public UpshiftButtonData(boolean pressed) {
 		this.setPressed(pressed);
 	}
 

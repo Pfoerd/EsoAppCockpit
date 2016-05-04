@@ -7,6 +7,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import de.fs.esoapp.cockpit.model.CarModel;
+import de.fs.esoapp.cockpit.model.CarModelListener;
 import de.fs.esoapp.cockpit.ui.animation.AnimationLoop;
 
 public class VirtualCockpitView extends JFrame implements CarModelListener {
@@ -50,12 +52,12 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 
 		speedRotationProvider = new RotationProvider();
 		clockPointerSpeed = new ClockPointer(speedRotationProvider,
-				animationLoop, 11, 14);
+				animationLoop, 660, 14, 41);
 		bgPanel.add(clockPointerSpeed);
 
 		torqueRotationProvider = new RotationProvider();
 		clockPointerTorque = new ClockPointer(torqueRotationProvider,
-				animationLoop, 660, 14);
+				animationLoop, 11, 14, 54);
 		bgPanel.add(clockPointerTorque);
 
 		this.getContentPane().add(bgPanel);
@@ -87,7 +89,12 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 	}
 
 	@Override
-	public void onSpeedChanged(double speed) {
-		speedRotationProvider.setRotation(speed);
+	public void onEngineSpeedChanged(double engineSpeed) {
+		torqueRotationProvider.setRotation(engineSpeed/30);
+	}
+
+	@Override
+	public void onCarSpeedChanged(double kmh) {
+		speedRotationProvider.setRotation(kmh);
 	}
 }

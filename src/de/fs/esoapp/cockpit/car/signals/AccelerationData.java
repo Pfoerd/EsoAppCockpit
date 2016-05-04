@@ -2,14 +2,14 @@ package de.fs.esoapp.cockpit.car.signals;
 
 public class AccelerationData {
 
-	private final int kmh;
+	private final int acceleration;
 
-	public AccelerationData(int kmh) {
-		this.kmh = kmh;
+	public AccelerationData(int engineSpeed) {
+		this.acceleration = engineSpeed;
 	}
 
-	public int getKmh() {
-		return kmh;
+	public int getAcceleration() {
+		return acceleration;
 	}
 
 }

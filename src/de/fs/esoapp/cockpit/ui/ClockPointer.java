@@ -22,11 +22,13 @@ public class ClockPointer extends JPanel implements Animated {
 	private double targetRotation = 0;
 	private Queue<Double> rotations = new LinkedList<>();
 	private ClockPointerRotationProvider dataProvider;
+	private int startRotation;
 
 	public ClockPointer(ClockPointerRotationProvider dataProvider,
-			AnimationHandler animationHander, int x, int y) {
+			AnimationHandler animationHander, int x, int y, int startRotation) {
 		super(null);
 		this.dataProvider = dataProvider;
+		this.startRotation = startRotation;
 		frequency = animationHander.getFrequency();
 		try {
 			image = ImageIO.read(BackgroundPanel.class
@@ -35,7 +37,6 @@ public class ClockPointer extends JPanel implements Animated {
 			assert (true);
 		}
 		this.setBounds(x, y, 335, 335);
-		// this.setBackground(Color.RED);
 		this.setOpaque(false);
 	}
 
@@ -49,9 +50,10 @@ public class ClockPointer extends JPanel implements Animated {
 		AffineTransform tx = new AffineTransform();
 		tx.translate(locationX, locationY + 104);
 		updateRotation();
-		double rotation = Math
-				.toRadians(rotations.poll() == null ? targetRotation
-						: rotations.poll());
+		double rotation = +Math
+				.toRadians(startRotation
+						+ (rotations.poll() == null ? targetRotation
+								: rotations.poll()));
 		tx.rotate(rotation, image.getWidth() / 2, image.getWidth() / 2 - 104);
 		RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_DEFAULT);

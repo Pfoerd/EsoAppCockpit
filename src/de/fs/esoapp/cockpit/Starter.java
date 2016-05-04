@@ -1,9 +1,10 @@
 package de.fs.esoapp.cockpit;
 
 import de.fs.esoapp.cockpit.car.signals.Accelerator;
-import de.fs.esoapp.cockpit.car.signals.EngineStarter;
+import de.fs.esoapp.cockpit.car.signals.DownshiftButton;
 import de.fs.esoapp.cockpit.car.signals.HifiVolume;
-import de.fs.esoapp.cockpit.ui.CarModel;
+import de.fs.esoapp.cockpit.car.signals.UpshiftButton;
+import de.fs.esoapp.cockpit.model.CarModel;
 import de.fs.esoapp.cockpit.ui.VirtualCockpitController;
 import de.fs.esoapp.cockpit.ui.VirtualCockpitView;
 
@@ -18,11 +19,13 @@ public class Starter {
 
 		Accelerator accelerator = new Accelerator(model);
 		HifiVolume hifiVolume = new HifiVolume(model);
-		EngineStarter engineStarter = new EngineStarter(model);
+		DownshiftButton downshiftButton = new DownshiftButton(model);
+		UpshiftButton upshiftButton = new UpshiftButton(model);
 
 		hifiVolume.start();
 		accelerator.start();
-		engineStarter.start();
+		upshiftButton.start();
+		downshiftButton.start();
 
 	}
 }

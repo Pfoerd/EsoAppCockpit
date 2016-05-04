@@ -1,7 +1,7 @@
 package de.fs.esoapp.cockpit.car;
 
 import de.fs.esoapp.cockpit.car.signals.Accelerator;
-import de.fs.esoapp.cockpit.car.signals.EngineStarter;
+import de.fs.esoapp.cockpit.car.signals.UpshiftButton;
 import de.fs.esoapp.cockpit.car.signals.HifiVolume;
 
 public class CarStarter {
@@ -11,7 +11,7 @@ public class CarStarter {
 
 		Accelerator accelerator = new Accelerator(bus);
 		HifiVolume hifiVolume = new HifiVolume(bus);
-		EngineStarter engineStarter = new EngineStarter(bus);
+		UpshiftButton engineStarter = new UpshiftButton(bus);
 
 		hifiVolume.start();
 		accelerator.start();
