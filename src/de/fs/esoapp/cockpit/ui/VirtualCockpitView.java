@@ -41,6 +41,20 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 		}
 	}
 
+	private class HifiVolumeProvider implements DiscreteValueProvider {
+
+		private int value;
+
+		@Override
+		public int getDiscreteValue() {
+			return value;
+		}
+
+		synchronized public void setVolume(int value) {
+			this.value = value;
+		}
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	private VirtualCockpitController controller;
@@ -49,6 +63,8 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 	private RotationProvider speedRotationProvider;
 	private RotationProvider torqueRotationProvider;
 	private GearIndicationProvider gearIndicatorProvider;
+
+	private HifiVolumeProvider volumeProvider;
 
 	public VirtualCockpitView(VirtualCockpitController controller,
 			CarModel model) {
@@ -78,6 +94,11 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 				gearIndicatorProvider);
 		bgPanel.add(gearIndicator);
 
+		volumeProvider = new HifiVolumeProvider();
+		HifiVolumePanel hifiVolume = new HifiVolumePanel(animationLoop,
+				volumeProvider);
+		bgPanel.add(hifiVolume);
+
 		this.getContentPane().add(bgPanel);
 		this.pack();
 		this.setSize(new Dimension(1005, 420));
@@ -87,6 +108,8 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 
 		animationLoop.add(clockPointerSpeed);
 		animationLoop.add(clockPointerTorque);
+		animationLoop.add(gearIndicator);
+		animationLoop.add(hifiVolume);
 		animationLoop.start();
 	}
 
@@ -124,5 +147,10 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 	@Override
 	public void onUpshift(int currentGear) {
 		gearIndicatorProvider.setGear(currentGear);
+	}
+
+	@Override
+	public void onHifiVolumeChanged(int loudnessLevel) {
+		volumeProvider.setVolume(loudnessLevel);
 	}
 }

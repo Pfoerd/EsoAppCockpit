@@ -10,4 +10,6 @@ public interface CarModelListener {
 
 	public void onDownshift(int currentGear);
 
+	public void onHifiVolumeChanged(int loudnessLevel);
+
 }

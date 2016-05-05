@@ -5,7 +5,8 @@ public class HifiVolumeData {
 	private final int loudnessLevel;
 
 	public HifiVolumeData(int loudnessLevel) {
-		this.loudnessLevel = loudnessLevel;
+		int i = loudnessLevel / 45;
+		this.loudnessLevel = i < 0 ? 0 : (i > 4 ? 4 : i);
 	}
 
 	public int getLoudnessLevel() {

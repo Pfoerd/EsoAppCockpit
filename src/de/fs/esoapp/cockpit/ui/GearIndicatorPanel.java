@@ -7,12 +7,13 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class GearIndicatorPanel extends JPanel {
+import de.fs.esoapp.cockpit.ui.animation.Animated;
+
+public class GearIndicatorPanel extends JPanel implements Animated {
 
 	private static final long serialVersionUID = 1L;
 
 	private BufferedImage[] images = new BufferedImage[10];
-
 	private DiscreteValueProvider dataProvider;
 
 	public GearIndicatorPanel(DiscreteValueProvider dataProvider) {
@@ -50,5 +51,10 @@ public class GearIndicatorPanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(images[dataProvider.getDiscreteValue()], 0, 0, null);
+	}
+
+	@Override
+	public void animate() {
+		this.repaint();
 	}
 }

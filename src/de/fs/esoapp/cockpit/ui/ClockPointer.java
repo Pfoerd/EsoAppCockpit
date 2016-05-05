@@ -52,7 +52,7 @@ public class ClockPointer extends JPanel implements Animated {
 		updateRotation();
 		double rotation = +Math
 				.toRadians(startRotation
-						+ (rotations.poll() == null ? targetRotation
+						+ (rotations.peek() == null ? targetRotation
 								: rotations.poll()));
 		tx.rotate(rotation, image.getWidth() / 2, image.getWidth() / 2 - 104);
 		RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
@@ -64,7 +64,7 @@ public class ClockPointer extends JPanel implements Animated {
 	private void updateRotation() {
 		double rotation = dataProvider.getRotation();
 		if (rotation != targetRotation) {
-			Double currentRotation = rotations.poll() == null ? targetRotation
+			Double currentRotation = rotations.peek() == null ? targetRotation
 					: rotations.poll();
 			rotations.clear();
 			targetRotation = rotation;
