@@ -6,4 +6,8 @@ public interface CarModelListener {
 
 	public void onCarSpeedChanged(double kmh);
 
+	public void onUpshift(int currentGear);
+
+	public void onDownshift(int currentGear);
+
 }

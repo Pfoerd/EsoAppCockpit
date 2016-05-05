@@ -11,21 +11,21 @@ public class GearShift {
 		this.maxGears = maxGears;
 		this.maxKmh = maxKmh;
 		this.maxEngineSpeed = maxEngineSpeed;
-		this.currentGear = 1;
+		this.currentGear = 0;
 	}
 
 	public int upshift() {
-		if (currentGear < maxGears)
-			currentGear++;
-		System.out.println("upshift, current gear: " + currentGear);
-		return (int) currentGear;
+		if (getCurrentGear() < maxGears)
+			currentGear = currentGear + 1;
+		System.out.println("upshift, current gear: " + getCurrentGear());
+		return (int) getCurrentGear();
 	}
 
 	public int downshift() {
-		if (currentGear > 1)
-			currentGear--;
-		System.out.println("downshift, current gear: " + currentGear);
-		return (int) currentGear;
+		if (getCurrentGear() > 1)
+			currentGear = currentGear - 1;
+		System.out.println("downshift, current gear: " + getCurrentGear());
+		return (int) getCurrentGear();
 	}
 
 	public double getMaxEngineSpeed() {
@@ -33,12 +33,17 @@ public class GearShift {
 	}
 
 	public double getEngineSpeed(double acceleration) {
-		double exact = acceleration * maxGears / currentGear;
-		return exact - currentGear * exact * 0.05;
+		double exact = acceleration * maxGears / getCurrentGear();
+		return exact - getCurrentGear() * exact * 0.05;
 	}
 
 	public double transmit(double engineSpeed) {
-		double slope = (maxKmh * (currentGear / maxGears)) / maxEngineSpeed;
+		double slope = (maxKmh * (getCurrentGear() / maxGears))
+				/ maxEngineSpeed;
 		return slope * engineSpeed;
+	}
+
+	public int getCurrentGear() {
+		return (int) currentGear;
 	}
 }

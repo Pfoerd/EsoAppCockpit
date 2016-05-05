@@ -27,6 +27,20 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 		}
 	}
 
+	private class GearIndicationProvider implements DiscreteValueProvider {
+
+		private int value;
+
+		@Override
+		public int getDiscreteValue() {
+			return value;
+		}
+
+		synchronized public void setGear(int value) {
+			this.value = value;
+		}
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	private VirtualCockpitController controller;
@@ -34,8 +48,7 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 
 	private RotationProvider speedRotationProvider;
 	private RotationProvider torqueRotationProvider;
-	private ClockPointer clockPointerSpeed;
-	private ClockPointer clockPointerTorque;
+	private GearIndicationProvider gearIndicatorProvider;
 
 	public VirtualCockpitView(VirtualCockpitController controller,
 			CarModel model) {
@@ -51,14 +64,19 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 		AnimationLoop animationLoop = new AnimationLoop();
 
 		speedRotationProvider = new RotationProvider();
-		clockPointerSpeed = new ClockPointer(speedRotationProvider,
-				animationLoop, 660, 14, 41);
+		ClockPointer clockPointerSpeed = new ClockPointer(
+				speedRotationProvider, animationLoop, 660, 14, 41);
 		bgPanel.add(clockPointerSpeed);
 
 		torqueRotationProvider = new RotationProvider();
-		clockPointerTorque = new ClockPointer(torqueRotationProvider,
-				animationLoop, 11, 14, 54);
+		ClockPointer clockPointerTorque = new ClockPointer(
+				torqueRotationProvider, animationLoop, 11, 14, 54);
 		bgPanel.add(clockPointerTorque);
+
+		gearIndicatorProvider = new GearIndicationProvider();
+		GearIndicatorPanel gearIndicator = new GearIndicatorPanel(
+				gearIndicatorProvider);
+		bgPanel.add(gearIndicator);
 
 		this.getContentPane().add(bgPanel);
 		this.pack();
@@ -90,11 +108,21 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 
 	@Override
 	public void onEngineSpeedChanged(double engineSpeed) {
-		torqueRotationProvider.setRotation(engineSpeed/30);
+		torqueRotationProvider.setRotation(engineSpeed / 30);
 	}
 
 	@Override
 	public void onCarSpeedChanged(double kmh) {
 		speedRotationProvider.setRotation(kmh);
+	}
+
+	@Override
+	public void onDownshift(int currentGear) {
+		gearIndicatorProvider.setGear(currentGear);
+	}
+
+	@Override
+	public void onUpshift(int currentGear) {
+		gearIndicatorProvider.setGear(currentGear);
 	}
 }

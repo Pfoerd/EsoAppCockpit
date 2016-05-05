@@ -27,5 +27,7 @@ public class Starter {
 		upshiftButton.start();
 		downshiftButton.start();
 
+		// wir legen schonmal nen Gang ein :)
+		model.upshift();
 	}
 }

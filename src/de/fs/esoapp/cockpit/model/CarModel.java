@@ -22,7 +22,11 @@ public class CarModel implements SignalBus {
 		observers.remove(o);
 	}
 
-	private GearShift gearShift = new GearShift(6, 240.0, 5000.0);
+	private GearShift gearShift;
+
+	public CarModel() {
+		gearShift = new GearShift(6, 200.0, 5000.0);
+	}
 
 	@Override
 	public void send(Signal<?> signal) {
@@ -57,11 +61,15 @@ public class CarModel implements SignalBus {
 		}
 	}
 
-	private void downshift() {
+	public void downshift() {
 		gearShift.downshift();
+		observers.forEach(carModelListener -> carModelListener
+				.onDownshift(gearShift.getCurrentGear()));
 	}
 
-	private void upshift() {
+	public void upshift() {
 		gearShift.upshift();
+		observers.forEach(carModelListener -> carModelListener
+				.onUpshift(gearShift.getCurrentGear()));
 	}
 }
