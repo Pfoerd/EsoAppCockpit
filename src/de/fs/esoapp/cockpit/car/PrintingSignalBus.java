@@ -17,7 +17,7 @@ public class PrintingSignalBus implements SignalBus {
 		} else if (data instanceof HifiVolumeData) {
 			HifiVolumeData hifiVolumeData = (HifiVolumeData) data;
 			System.out.println(Thread.currentThread().getName()
-					+ " Loudness Level: " + hifiVolumeData.getLoudnessLevel());
+					+ " Loudness Level: " + hifiVolumeData.getVolume());
 		} else if (data instanceof UpshiftButtonData) {
 			UpshiftButtonData engineStartData = (UpshiftButtonData) data;
 			if (engineStartData.isPressed()) {

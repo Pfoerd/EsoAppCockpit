@@ -59,7 +59,7 @@ public class CarModel implements SignalBus {
 		} else if (data instanceof HifiVolumeData) {
 			HifiVolumeData hifiVolumeData = (HifiVolumeData) data;
 			observers.forEach(carModelListener -> carModelListener
-					.onHifiVolumeChanged(hifiVolumeData.getLoudnessLevel()));
+					.onHifiVolumeChanged(hifiVolumeData.getVolume()));
 		}
 	}
 

@@ -2,15 +2,14 @@ package de.fs.esoapp.cockpit.car.signals;
 
 public class HifiVolumeData {
 
-	private final int loudnessLevel;
+	private final int volume;
 
-	public HifiVolumeData(int loudnessLevel) {
-		int i = loudnessLevel / 45;
-		this.loudnessLevel = i < 0 ? 0 : (i > 4 ? 4 : i);
+	public HifiVolumeData(int volume) {
+		this.volume = volume;
 	}
 
-	public int getLoudnessLevel() {
-		return loudnessLevel;
+	public int getVolume() {
+		return volume;
 	}
 
 }
