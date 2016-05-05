@@ -2,18 +2,15 @@ package de.fs.esoapp.cockpit.model;
 
 public class GearShift {
 
-	private int maxGears;
-	private int currentGear;
+	private double maxGears;
+	private double currentGear;
 	private double maxKmh;
 	private double maxEngineSpeed;
-	private double maxAcceleration;
 
-	public GearShift(int maxGears, double maxKmh, double maxEngineSpeed,
-			double maxAcceleration) {
+	public GearShift(int maxGears, double maxKmh, double maxEngineSpeed) {
 		this.maxGears = maxGears;
 		this.maxKmh = maxKmh;
-		this.maxAcceleration = maxAcceleration;
-		this.setMaxEngineSpeed(maxEngineSpeed);
+		this.maxEngineSpeed = maxEngineSpeed;
 		this.currentGear = 1;
 	}
 
@@ -21,31 +18,27 @@ public class GearShift {
 		if (currentGear < maxGears)
 			currentGear++;
 		System.out.println("upshift, current gear: " + currentGear);
-		return currentGear;
+		return (int) currentGear;
 	}
 
 	public int downshift() {
 		if (currentGear > 1)
 			currentGear--;
 		System.out.println("downshift, current gear: " + currentGear);
-		return currentGear;
+		return (int) currentGear;
 	}
 
 	public double getMaxEngineSpeed() {
 		return maxEngineSpeed;
 	}
 
-	public void setMaxEngineSpeed(double maxEngineSpeed) {
-		this.maxEngineSpeed = maxEngineSpeed;
-	}
-
 	public double getEngineSpeed(double acceleration) {
-		return (getMaxEngineSpeed() / maxGears / maxAcceleration) / currentGear
-				* acceleration * 2;
+		double exact = acceleration * maxGears / currentGear;
+		return exact - currentGear * exact * 0.05;
 	}
 
 	public double transmit(double engineSpeed) {
-		return maxKmh / maxGears * currentGear * (maxGears - currentGear)
-				* engineSpeed / getMaxEngineSpeed();
+		double slope = (maxKmh * (currentGear / maxGears)) / maxEngineSpeed;
+		return slope * engineSpeed;
 	}
 }

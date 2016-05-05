@@ -11,7 +11,7 @@ public class Accelerator extends DiscreteSensor<AccelerationData> {
 
 	@Override
 	protected AccelerationData constructSignalData(int tachoCount) {
-		return new AccelerationData(tachoCount < 0 ? 0 : tachoCount * 3);
+		return new AccelerationData(tachoCount < 0 ? 0 : tachoCount * 20);
 	}
 
 }

@@ -22,7 +22,7 @@ public class CarModel implements SignalBus {
 		observers.remove(o);
 	}
 
-	private GearShift gearShift = new GearShift(8, 240.0, 7000, 220);
+	private GearShift gearShift = new GearShift(6, 240.0, 7000.0);
 
 	@Override
 	public void send(Signal<?> signal) {
@@ -30,12 +30,11 @@ public class CarModel implements SignalBus {
 		if (data instanceof AccelerationData) {
 			AccelerationData accelerationData = (AccelerationData) data;
 			double acceleration = accelerationData.getAcceleration();
-			// System.out.println("current acceleration: " + acceleration);
-
 			double engineSpeed = gearShift.getEngineSpeed(acceleration);
-			// System.out.println("current engine speed: " + engineSpeed);
-
 			double kmh = gearShift.transmit(engineSpeed);
+
+			// System.out.println("current acceleration: " + acceleration);
+			// System.out.println("current engine speed: " + engineSpeed);
 			// System.out.println("current kmh: " + kmh);
 
 			observers.forEach(carModelListener -> carModelListener
