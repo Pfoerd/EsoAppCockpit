@@ -22,7 +22,7 @@ public class CarModel implements SignalBus {
 		observers.remove(o);
 	}
 
-	private GearShift gearShift = new GearShift(6, 240.0, 7000.0);
+	private GearShift gearShift = new GearShift(6, 240.0, 5000.0);
 
 	@Override
 	public void send(Signal<?> signal) {
