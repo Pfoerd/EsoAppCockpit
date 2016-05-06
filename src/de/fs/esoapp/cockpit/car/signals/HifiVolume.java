@@ -13,6 +13,7 @@ public class HifiVolume extends DiscreteSensor<HifiVolumeData> {
 
 	@Override
 	protected HifiVolumeData constructSignalData(int newVolume) {
+		newVolume = -newVolume;
 		int volume = newVolume - offset;
 		if (volume < 0) {
 			offset = newVolume;

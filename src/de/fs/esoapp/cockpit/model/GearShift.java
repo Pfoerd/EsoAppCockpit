@@ -17,14 +17,12 @@ public class GearShift {
 	public int upshift() {
 		if (getCurrentGear() < maxGears)
 			currentGear = currentGear + 1;
-		System.out.println("upshift, current gear: " + getCurrentGear());
 		return (int) getCurrentGear();
 	}
 
 	public int downshift() {
 		if (getCurrentGear() > 1)
 			currentGear = currentGear - 1;
-		System.out.println("downshift, current gear: " + getCurrentGear());
 		return (int) getCurrentGear();
 	}
 

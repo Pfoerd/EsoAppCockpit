@@ -16,6 +16,7 @@ public class Starter {
 				model);
 		VirtualCockpitView view = new VirtualCockpitView(controller, model);
 		model.addCarModelListener(view);
+		model.addCarModelListener(new LoggingView());
 
 		Accelerator accelerator = new Accelerator(model);
 		HifiVolume hifiVolume = new HifiVolume(model);
