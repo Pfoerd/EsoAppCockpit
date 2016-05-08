@@ -3,6 +3,16 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="res"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="con" path="org.lejos.nxt.ldt.LEJOS_LIBRARY_CONTAINER/pc"/>
+	<classpathentry kind="lib" path="lib/3rdparty/bcel.jar"/>
+	<classpathentry kind="lib" path="lib/3rdparty/bluecove-gpl.jar"/>
+	<classpathentry kind="lib" path="lib/3rdparty/bluecove.jar"/>
+	<classpathentry kind="lib" path="lib/3rdparty/commons-cli.jar"/>
+	<classpathentry kind="lib" path="lib/3rdparty/jcommon.jar"/>
+	<classpathentry kind="lib" path="lib/3rdparty/jfreechart.jar"/>
+	<classpathentry kind="lib" path="lib/3rdparty/stax-api-1.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/charting.jar"/>
+	<classpathentry kind="lib" path="lib/jtools.jar"/>
+	<classpathentry kind="lib" path="lib/pccomm.jar"/>
+	<classpathentry kind="lib" path="lib/pctools.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

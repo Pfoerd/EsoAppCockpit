@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project EsoAppCockpit with libraries in sub-folder">
+	<!--this file was created by Eclipse Runnable JAR Export Wizard-->
+	<!--ANT 1.7 is required                                        -->
+	<target name="create_run_jar">
+		<jar destfile="D:/ws/lejos/EsoAppCockpit/dist/EsoAppCockpit.jar">
+			<manifest>
+				<attribute name="Main-Class" value="de.fs.esoapp.cockpit.Starter" />
+				<attribute name="Class-Path" value="EsoAppCockpit_lib/pccomm.jar EsoAppCockpit_lib/jtools.jar EsoAppCockpit_lib/charting.jar EsoAppCockpit_lib/pctools.jar EsoAppCockpit_lib/3rdparty/bcel.jar EsoAppCockpit_lib/3rdparty/bluecove.jar EsoAppCockpit_lib/3rdparty/bluecove-gpl.jar EsoAppCockpit_lib/3rdparty/commons-cli.jar EsoAppCockpit_lib/3rdparty/jcommon.jar EsoAppCockpit_lib/3rdparty/jfreechart.jar EsoAppCockpit_lib/3rdparty/stax-api-1.0.1.jar" />
+			</manifest>
+			<fileset dir="D:/ws/lejos/EsoAppCockpit/bin" />
+		</jar>
+		<delete dir="D:/ws/lejos/EsoAppCockpit/dist/EsoAppCockpit_lib" />
+		<mkdir dir="D:/ws/lejos/EsoAppCockpit/dist/EsoAppCockpit_lib" />
+		<copydir src="D:/ws/lejos/EsoAppCockpit/lib" dest="D:/ws/lejos/EsoAppCockpit/dist/EsoAppCockpit_lib" />
+	</target>
+</project>
