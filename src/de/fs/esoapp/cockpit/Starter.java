@@ -4,6 +4,7 @@ import de.fs.esoapp.cockpit.car.signals.Accelerator;
 import de.fs.esoapp.cockpit.car.signals.DownshiftButton;
 import de.fs.esoapp.cockpit.car.signals.HifiVolume;
 import de.fs.esoapp.cockpit.car.signals.UpshiftButton;
+import de.fs.esoapp.cockpit.logging.LoggingView;
 import de.fs.esoapp.cockpit.model.CarModel;
 import de.fs.esoapp.cockpit.ui.VirtualCockpitController;
 import de.fs.esoapp.cockpit.ui.VirtualCockpitView;

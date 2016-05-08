@@ -1,4 +1,4 @@
-package de.fs.esoapp.cockpit;
+package de.fs.esoapp.cockpit.logging;
 
 import de.fs.esoapp.cockpit.model.CarModelListener;
 
