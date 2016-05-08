@@ -13,22 +13,30 @@ import de.fs.esoapp.cockpit.ui.animation.AnimationLoop;
 
 public class VirtualCockpitView extends JFrame implements CarModelListener {
 
+	/*
+	 * Thread-safe!
+	 */
 	private class RotationProvider implements ClockPointerRotationProvider {
 
-		private double rotation;
+		// to ensure happens-before relationship of getter and setter
+		private volatile double rotation;
 
 		@Override
 		public double getRotation() {
 			return rotation;
 		}
 
-		synchronized public void setRotation(double rotation) {
+		public void setRotation(double rotation) {
 			this.rotation = rotation;
 		}
 	}
 
+	/*
+	 * Thread-safe!
+	 */
 	private class GearIndicationProvider implements DiscreteValueProvider {
 
+		// volatile not needed, is atomic anyway
 		private int value;
 
 		@Override
@@ -36,13 +44,17 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 			return value;
 		}
 
-		synchronized public void setGear(int value) {
+		public void setGear(int value) {
 			this.value = value;
 		}
 	}
 
+	/*
+	 * Thread-safe!
+	 */
 	private class HifiVolumeProvider implements DiscreteValueProvider {
 
+		// volatile not needed, is atomic anyway
 		private int value;
 
 		@Override
@@ -50,7 +62,7 @@ public class VirtualCockpitView extends JFrame implements CarModelListener {
 			return value;
 		}
 
-		synchronized public void setVolume(int value) {
+		public void setVolume(int value) {
 			this.value = value;
 		}
 	}

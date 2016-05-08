@@ -64,14 +64,14 @@ public class CarModel implements SignalBus {
 	}
 
 	public void downshift() {
-		gearShift.downshift();
+		int newGear = gearShift.downshift();
 		observers.forEach(carModelListener -> carModelListener
-				.onDownshift(gearShift.getCurrentGear()));
+				.onDownshift(newGear));
 	}
 
 	public void upshift() {
-		gearShift.upshift();
+		int newGear = gearShift.upshift();
 		observers.forEach(carModelListener -> carModelListener
-				.onUpshift(gearShift.getCurrentGear()));
+				.onUpshift(newGear));
 	}
 }

@@ -9,32 +9,33 @@ public class LoggingView implements CarModelListener {
 
 	@Override
 	public void onEngineSpeedChanged(double speed) {
-		// TODO Auto-generated method stub
-
+		// don't log this signal
 	}
 
 	@Override
 	public void onCarSpeedChanged(double kmh) {
 		if (kmh != this.kmh) {
-			System.out.println("new car speed: " + kmh);
+			System.out.println(String.format("new car speed: %.2f units", kmh));
 			this.kmh = kmh;
 		}
 	}
 
 	@Override
 	public void onUpshift(int currentGear) {
-		System.out.println("upshift, current gear: " + currentGear);
+		System.out.println(String.format("upshift, current gear: %s",
+				currentGear));
 	}
 
 	@Override
 	public void onDownshift(int currentGear) {
-		System.out.println("downshift, current gear: " + currentGear);
+		System.out.println(String.format("downshift, current gear: %s",
+				currentGear));
 	}
 
 	@Override
 	public void onHifiVolumeChanged(int volume) {
 		if (volume != this.volume) {
-			System.out.println("new volume: " + volume);
+			System.out.println(String.format("new volume: %s", volume));
 			this.volume = volume;
 		}
 	}

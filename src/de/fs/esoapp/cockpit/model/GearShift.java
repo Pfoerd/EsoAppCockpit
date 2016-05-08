@@ -1,11 +1,14 @@
 package de.fs.esoapp.cockpit.model;
 
+/*
+ * Thread-safe!
+ */
 public class GearShift {
 
-	private double maxGears;
-	private double currentGear;
-	private double maxKmh;
-	private double maxEngineSpeed;
+	private final double maxGears;
+	private final double maxKmh;
+	private final double maxEngineSpeed;
+	private volatile double currentGear;
 
 	public GearShift(int maxGears, double maxKmh, double maxEngineSpeed) {
 		this.maxGears = maxGears;
@@ -15,33 +18,32 @@ public class GearShift {
 	}
 
 	public int upshift() {
-		if (getCurrentGear() < maxGears)
-			currentGear = currentGear + 1;
-		return (int) getCurrentGear();
+		// just one upshift/downshift action at the same time
+		synchronized (this) {
+			if (currentGear < maxGears)
+				currentGear = currentGear + 1;
+		}
+		return (int) currentGear;
 	}
 
 	public int downshift() {
-		if (getCurrentGear() > 1)
-			currentGear = currentGear - 1;
-		return (int) getCurrentGear();
-	}
-
-	public double getMaxEngineSpeed() {
-		return maxEngineSpeed;
+		// just one upshift/downshift action at the same time
+		synchronized (this) {
+			if (currentGear > 1)
+				currentGear = currentGear - 1;
+		}
+		return (int) currentGear;
 	}
 
 	public double getEngineSpeed(double acceleration) {
-		double exact = acceleration * maxGears / getCurrentGear();
-		return exact - getCurrentGear() * exact * 0.05;
+		// Thread-safe because currentGear is volatile
+		double exact = acceleration * maxGears / currentGear;
+		return exact - currentGear * exact * 0.05;
 	}
 
 	public double transmit(double engineSpeed) {
-		double slope = (maxKmh * (getCurrentGear() / maxGears))
-				/ maxEngineSpeed;
+		// Thread-safe because currentGear is volatile
+		double slope = (maxKmh * (currentGear / maxGears)) / maxEngineSpeed;
 		return slope * engineSpeed;
-	}
-
-	public int getCurrentGear() {
-		return (int) currentGear;
 	}
 }
